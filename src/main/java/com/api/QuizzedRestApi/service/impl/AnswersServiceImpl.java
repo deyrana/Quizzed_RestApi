@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.QuizzedRestApi.entity.AnswersEntity;
+import com.api.QuizzedRestApi.repo.AnswersRepo;
 import com.api.QuizzedRestApi.service.AnswersService;
 
 import jakarta.persistence.EntityManager;
@@ -20,8 +21,8 @@ public class AnswersServiceImpl implements AnswersService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AnswersServiceImpl.class);
 
-//	@Autowired
-//	private AnswersRepo answersRepo;
+	@Autowired
+	private AnswersRepo answersRepo;
 
 	@Autowired
 	private EntityManager em;
@@ -37,6 +38,12 @@ public class AnswersServiceImpl implements AnswersService {
 
 		List<AnswersEntity> result = em.createQuery(cq).getResultList();
 
+		return result;
+	}
+
+	@Override
+	public AnswersEntity addAnswer(AnswersEntity ae) {
+		AnswersEntity result = answersRepo.saveAndFlush(ae);
 		return result;
 	}
 

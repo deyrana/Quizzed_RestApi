@@ -32,11 +32,9 @@ public class AnswersController {
 	@ResponseBody
 	public ResponseEntity<List<AnswersEntity>> getAnswers(@RequestParam("ques") String ques) {
 		try {
-			LOG.info("Qids list - {}", ques);
 			int[] numbers = Arrays.stream(ques.split(",")).mapToInt(Integer::parseInt).toArray();
 			List<Integer> qIds = Arrays.stream(numbers).boxed().collect(Collectors.toList());
 			List<AnswersEntity> answersList = answersService.getAnswers(qIds);
-			LOG.info("AnswersList - {}", answersList);
 			return ResponseEntity.ok().body(answersList);
 		} catch (Exception e) {
 			LOG.error("Error occurred - {}", e.getMessage());

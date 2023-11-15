@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.QuizzedRestApi.entity.QuestionsEntity;
+import com.api.QuizzedRestApi.entity.QuizImagesEntity;
 import com.api.QuizzedRestApi.repo.QuestionsRepo;
+import com.api.QuizzedRestApi.repo.QuizImagesRepo;
 import com.api.QuizzedRestApi.service.QuestionsService;
 
 import jakarta.persistence.EntityManager;
@@ -19,11 +21,14 @@ import jakarta.persistence.criteria.Root;
 @Service
 public class QuestionsServiceImpl implements QuestionsService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(QuestionsService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(QuestionsServiceImpl.class);
 
 	@Autowired
 	private QuestionsRepo questionsRepo;
-	
+
+	@Autowired
+	private QuizImagesRepo quizImagesRepo;
+
 	@Autowired
 	private EntityManager em;
 
@@ -54,9 +59,20 @@ public class QuestionsServiceImpl implements QuestionsService {
 		} catch (Exception e) {
 			LOG.error("Error occurred - {}", e.getMessage());
 		}
-		
+
 		return null;
 
 	}
 
+	@Override
+	public QuizImagesEntity saveQuizImage(QuizImagesEntity qie) {
+		QuizImagesEntity result = quizImagesRepo.saveAndFlush(qie);
+		return result;
+	}
+
+	@Override
+	public QuestionsEntity addQuestion(QuestionsEntity qe) {
+		QuestionsEntity result = questionsRepo.saveAndFlush(qe);
+		return result;
+	}
 }

@@ -1,7 +1,16 @@
 package com.api.QuizzedRestApi.entity;
 
+import java.io.IOException;
 import java.sql.Timestamp;
-import jakarta.persistence.*;
+
+import com.api.QuizzedRestApi.dto.QuestionDto;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "questions")
@@ -23,12 +32,31 @@ public class QuestionsEntity {
 	private String optionC;
 	@Column(name = "op_d")
 	private String optionD;
-	@Column(name = "image_path")
-	private String imagePath;
+	@Column(name = "image_name")
+	private String imageName;
+	@Column(name = "pic_byte", length = 900000000)
+	private byte[] picByte;
+	@Column(name = "image_type")
+	private String imageType;
 	@Column(name = "created_ts", updatable = false, insertable = false)
 	private Timestamp createdTs;
 	@Column(name = "last_updated_ts", updatable = false, insertable = false)
 	private Timestamp lastUpdatedTs;
+
+	public QuestionsEntity() {
+		super();
+
+	}
+
+	public QuestionsEntity(QuestionDto qdto) throws IOException {
+		super();
+		this.ques = qdto.getQues();
+		this.genre = qdto.getGenre();
+		this.optionA = qdto.getOptionA();
+		this.optionB = qdto.getOptionB();
+		this.optionC = qdto.getOptionC();
+		this.optionD = qdto.getOptionD();
+	}
 
 	public Integer getqId() {
 		return qId;
@@ -86,12 +114,28 @@ public class QuestionsEntity {
 		this.optionD = optionD;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public byte[] getPicByte() {
+		return picByte;
+	}
+
+	public void setPicByte(byte[] picByte) {
+		this.picByte = picByte;
+	}
+	
+	public String getImageType() {
+		return imageType;
+	}
+
+	public void setImageType(String imageType) {
+		this.imageType = imageType;
 	}
 
 	public Timestamp getCreatedTs() {
@@ -113,8 +157,9 @@ public class QuestionsEntity {
 	@Override
 	public String toString() {
 		return "QuestionsEntity [qId=" + qId + ", genre=" + genre + ", ques=" + ques + ", optionA=" + optionA
-				+ ", optionB=" + optionB + ", optionC=" + optionC + ", optionD=" + optionD + ", imagePath=" + imagePath
-				+ ", createdTs=" + createdTs + ", lastUpdatedTs=" + lastUpdatedTs + "]";
+				+ ", optionB=" + optionB + ", optionC=" + optionC + ", optionD=" + optionD + ", imageName=" + imageName
+				+ ", createdTs=" + createdTs + ", lastUpdatedTs="
+				+ lastUpdatedTs + "]";
 	}
 
 }

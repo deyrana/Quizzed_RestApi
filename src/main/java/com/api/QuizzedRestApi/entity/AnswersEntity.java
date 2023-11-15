@@ -1,6 +1,10 @@
 package com.api.QuizzedRestApi.entity;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Arrays;
+
+import com.api.QuizzedRestApi.dto.AnswerDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,12 +27,27 @@ public class AnswersEntity {
 	private String correctOption;
 	@Column(name = "ans_explaination")
 	private String ansExplaination;
-	@Column(name = "image_path")
-	private String imagePath;
+	@Column(name = "image_name")
+	private String imageName;
+	@Column(name = "pic_byte", length = 900000000)
+	private byte[] picByte;
+	@Column(name = "image_type")
+	private String imageType;
 	@Column(name = "created_ts", updatable = false, insertable = false)
 	private Timestamp createdTs;
 	@Column(name = "last_updated_ts", updatable = false, insertable = false)
 	private Timestamp lastUpdatedTs;
+
+	public AnswersEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public AnswersEntity(AnswerDto adto) throws IOException {
+		super();
+		this.correctOption = adto.getCorrectOption();
+		this.ansExplaination = adto.getAnsExplaination();
+	}
 
 	public Integer getAnsId() {
 		return ansId;
@@ -62,12 +81,20 @@ public class AnswersEntity {
 		this.ansExplaination = ansExplaination;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public byte[] getPicByte() {
+		return picByte;
+	}
+
+	public void setPicByte(byte[] picByte) {
+		this.picByte = picByte;
 	}
 
 	public Timestamp getCreatedTs() {
@@ -86,10 +113,19 @@ public class AnswersEntity {
 		this.lastUpdatedTs = lastUpdatedTs;
 	}
 
+	public String getImageType() {
+		return imageType;
+	}
+
+	public void setImageType(String imageType) {
+		this.imageType = imageType;
+	}
+
 	@Override
 	public String toString() {
 		return "AnswersEntity [ansId=" + ansId + ", qId=" + qId + ", correctOption=" + correctOption
-				+ ", ansExplaination=" + ansExplaination + ", imagePath=" + imagePath + ", createdTs=" + createdTs
+				+ ", ansExplaination=" + ansExplaination + ", imageName=" + imageName + ", picByte="
+				+ Arrays.toString(picByte) + ", imageType=" + imageType + ", createdTs=" + createdTs
 				+ ", lastUpdatedTs=" + lastUpdatedTs + "]";
 	}
 
