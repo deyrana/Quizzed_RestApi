@@ -60,7 +60,7 @@ public class QuestionsController {
 			List<QuestionsEntity> questionList = questionsService.getQuestions(qIds);
 			return ResponseEntity.ok().body(questionList);
 		} catch (Exception e) {
-			LOG.error("Error occurred - {}", e.getMessage());
+			LOG.error("Error occurred getQuestions - {}", e.getMessage());
 		}
 
 		return ResponseEntity.notFound().build();
