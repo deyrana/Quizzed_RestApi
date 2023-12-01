@@ -66,6 +66,20 @@ public class QuestionsController {
 		return ResponseEntity.notFound().build();
 
 	}
+	
+	@GetMapping(path = "/ques/config")
+	@ResponseBody
+	public ResponseEntity<List<QuestionsEntity>> getQuestionsConfig(@RequestParam("genre") String genre, @RequestParam("totalQues") String totalQues) {
+		try {
+			List<QuestionsEntity> quesList = questionsService.getQuestionsConfig(genre, totalQues);
+			return ResponseEntity.ok().body(quesList);
+		} catch (Exception e) {
+			LOG.error("Error occurred getQuestions - {}", e.getMessage());
+		}
+
+		return ResponseEntity.notFound().build();
+
+	}
 
 	@PostMapping(path = "/ques/addQues", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseBody

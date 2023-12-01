@@ -13,6 +13,7 @@ import com.api.QuizzedRestApi.repo.QuestionsRepo;
 import com.api.QuizzedRestApi.repo.QuizImagesRepo;
 import com.api.QuizzedRestApi.service.QuestionsService;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -73,6 +74,19 @@ public class QuestionsServiceImpl implements QuestionsService {
 	@Override
 	public QuestionsEntity addQuestion(QuestionsEntity qe) {
 		QuestionsEntity result = questionsRepo.saveAndFlush(qe);
+		return result;
+	}
+
+	@Override
+	public List<QuestionsEntity> getQuestionsConfig(String genre, String totalQues) {
+		List<QuestionsEntity> result = null;
+		
+		if(genre.equals("*")) {
+			result = questionsRepo.getAllGenreQuestions(totalQues);
+		} else {
+			result = questionsRepo.getQuestionsConfig(genre, totalQues);
+		}
+		
 		return result;
 	}
 }

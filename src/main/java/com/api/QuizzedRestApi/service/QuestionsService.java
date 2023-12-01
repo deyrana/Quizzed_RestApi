@@ -15,4 +15,6 @@ public interface QuestionsService {
 
 	public QuestionsEntity addQuestion(QuestionsEntity qe);
 
+	public List<QuestionsEntity> getQuestionsConfig(String genre, String totalQues);
+
 }
